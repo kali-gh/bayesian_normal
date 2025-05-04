@@ -27,7 +27,7 @@ logger.info("Initializing prior")
 prior = Normal(mean=data['prior_mean'], cov=data['prior_cov'])
 logger.info(prior)
 
-bn = BayesNormal(variance=1, prior_mean=data['prior_mean'], prior_cov=data['prior_cov'], intercept=True)
+bn = BayesNormal(variance=1/inputs['precision_y'], prior_mean=data['prior_mean'], prior_cov=data['prior_cov'], intercept=True)
 
 bn.add_observations(data['X'], data['y'])
 
