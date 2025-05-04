@@ -26,3 +26,11 @@ pip install -r requirements.txt
 ```
 python test_known_var.py
 ```
+
+
+### Building
+
+To build as wheel
+```
+python setup.py bdist_wheel
+```

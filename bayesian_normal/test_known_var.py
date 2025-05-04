@@ -11,7 +11,8 @@ inputs = {
     'prior_alpha' : 2.0,
     'w0_true' : -0.7,
     'w1_true' : 0.5,
-    'precision_y' : 25
+    'precision_y' : 25,
+    'N' : 100
 }
 
 logger.info("Setting inputs")

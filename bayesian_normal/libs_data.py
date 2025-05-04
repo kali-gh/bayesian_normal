@@ -7,11 +7,17 @@ np.random.seed(42)
 
 logger = logging.getLogger(__name__)
 
-def build_dummy_dataset(inputs):
+def build_dummy_dataset(
+        inputs):
     """
     Builds a dummy dataset similar to Bishop 2006, section 3.1
 
     :param inputs: input parameters , see test_known_var.py
+        w0_true : true intercept
+        w1_true : true intercept
+        prior_alpha : prior alpha scaling factor - see Bishop
+        precision_y : inverse variance of generating process for y - see Bishop
+        N : number of datapoints to generate
     :return: dictionary
         prior_mean : prior means
         prior_cov : prior covariance
@@ -30,7 +36,7 @@ def build_dummy_dataset(inputs):
     logger.info("Setting parameters")
 
     std_dev_y = np.sqrt(1 / inputs['precision_y'])
-    X = np.random.uniform(-1, 1, 20)
+    X = np.random.uniform(-1, 1, inputs['N'])
 
     data = {
         'prior_mean': np.reshape(np.array([0, 0]), (-1, 1)),
