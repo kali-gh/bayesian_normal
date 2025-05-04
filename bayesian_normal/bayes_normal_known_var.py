@@ -7,7 +7,7 @@ logger = logging.getLogger(__name__)
 from typing import List
 from scipy.stats import multivariate_normal
 
-from .dist import Normal
+from libs_dist import Normal
 
 
 class BayesNormal:

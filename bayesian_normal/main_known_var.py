@@ -9,8 +9,8 @@ np.random.seed(42)
 
 from scipy.stats import multivariate_normal
 
-from bayes_normal import BayesNormal
-from .dist import Normal
+from bayes_normal_known_var import BayesNormal
+from libs_dist import Normal
 
 logging.basicConfig(level=logging.INFO)
 logger=logging.getLogger(__name__)

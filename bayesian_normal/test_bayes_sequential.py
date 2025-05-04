@@ -6,7 +6,7 @@ import random
 
 from scipy.stats import multivariate_normal
 
-from .dist import Normal
+from libs_dist import Normal
 
 np.random.seed(42)
 random.seed(42)
