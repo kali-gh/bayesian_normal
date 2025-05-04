@@ -2,3 +2,5 @@ scipy
 scikit-learn
 numpy
 matplotlib
+scipy
+wheel

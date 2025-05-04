@@ -13,7 +13,7 @@ In the current state of the library, we implement two main scripts:
 - bayes_sequential : sequential learning for a 1-d regression problem as shown in Bishop 2006, page 155.
 - main_known_var : implement general solution as shown in Bishop 2006 for case of unknown mean and known variance
 
-# Set up 
+### Set up 
 
 ```
 python -m venv venv
@@ -21,12 +21,8 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-# Running
+### Testing
 
 ```
-python bayes_sequential.py
-```
-
-```
-python main.py
+python test_known_var.py
 ```
