@@ -2,10 +2,10 @@ import logging
 import numpy as np
 import random
 
+logger = logging.getLogger(__name__)
+
 random.seed(42)
 np.random.seed(42)
-
-logger = logging.getLogger(__name__)
 
 def build_dummy_dataset(
         inputs):

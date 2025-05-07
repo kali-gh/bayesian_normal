@@ -7,7 +7,8 @@ logger = logging.getLogger(__name__)
 from typing import List
 from scipy.stats import multivariate_normal
 
-from libs_dist import Normal
+from .libs_dist import Normal
+from sklearn.base import BaseEstimator
 
 
 class BayesNormal:
@@ -108,3 +109,30 @@ class BayesNormal:
 
         self.posterior = Normal(mean=m_N, cov=S_N)
 
+
+class BayesNormalEstimator(BaseEstimator):
+    def __init__(
+            self,
+            *,
+            variance,
+            prior_mean,
+            prior_cov):
+
+        self.variance = variance
+        self.prior_mean = prior_mean
+        self.prior_cov = prior_cov
+
+        self.bn = BayesNormal(
+            variance=variance,
+            prior_mean=prior_mean,
+            prior_cov=prior_cov)
+
+    def fit(self, X, y=None):
+
+        self.is_fitted_ = True
+        self.bn.add_observations(X, y)
+
+        return self
+
+    def predict(self, X):
+        return X @ self.bn.posterior.mean
