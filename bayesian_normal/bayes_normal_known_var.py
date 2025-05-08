@@ -116,11 +116,13 @@ class BayesNormalEstimator(BaseEstimator):
             *,
             variance,
             prior_mean,
-            prior_cov):
+            prior_cov,
+            predict_thompson_sample = False):
 
         self.variance = variance
         self.prior_mean = prior_mean
         self.prior_cov = prior_cov
+        self.predict_thompson_sample=predict_thompson_sample
 
         self.bn = BayesNormal(
             variance=variance,
@@ -135,4 +137,11 @@ class BayesNormalEstimator(BaseEstimator):
         return self
 
     def predict(self, X):
-        return X @ self.bn.posterior.mean
+        if not self.predict_thompson_sample:
+            inferences = X @ self.bn.posterior.mean
+        else:
+            sample_posterior = multivariate_normal(mean=self.bn.posterior.mean.flatten(), cov=self.bn.posterior.cov).rvs(size=1)
+            sample_posterior = np.reshape(sample_posterior, (-1, 1))
+            inferences = X @ sample_posterior
+
+        return inferences
