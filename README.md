@@ -90,7 +90,7 @@ from libs_dist import Normal
 prior = Normal(mean=data['prior_mean'], cov=data['prior_cov'])
 ```
 
-The prior sets the inputs to the learning as shown:
+The prior is then defined as follows:
 ```python
 Normal(
     mean= array(
@@ -102,7 +102,7 @@ Normal(
        ))
 ```
 
-and we can for the estimator using
+We can form the estimator in the following way:
 
 ```python
 from bayes_normal_known_var import BayesNormal
