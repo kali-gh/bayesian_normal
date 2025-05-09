@@ -135,6 +135,12 @@ so that after 20 observations the intercept is estimated as $-0.682$ vs the grou
 the slope is $0.499$ vs. the ground truth of $0.500$
 
 
+This is also encapsulated in the following script:
+
+```
+python test_known_var.py
+```
+
 
 ### Scikit-learn Estimator
 
@@ -152,7 +158,7 @@ clf = BayesNormalEstimator(
 )
 ```
 
-We can fit the stimator with
+We can fit the estimator with
 
 ```python
 clf.fit(data['X'], data['y'])
@@ -173,12 +179,40 @@ Normal(
     ))
 ```
 
+### Prediction
 
-This is also encapsulated in the following script:
+We can build predictions with the estimator by calling
+```python
+clf.predict(data['X'])
 
+    0,-0.8073046805998443
+    1,-0.23233597527166444
+    2,-0.45059872909983767
+    ...
 ```
-python test_known_var.py
+
+These are the posterior mean estimates after the fit. 
+
+We can also Thompson sample from the posterior distribution predictions by calling
+
+```python
+clf = BayesNormalEstimator(
+    variance=1/inputs['precision_y'],
+    prior_mean=data['prior_mean'],
+    prior_cov=data['prior_cov'],
+    intercept=True,
+    predict_thompson_sample=True
+)
+clf.fit(data['X'], data['y'])
+clf.predict(data['X'])
+    -0.803835208966934
+    -0.2406691453895312
+    -0.45445152129956784
+    ...
 ```
+
+In this case the predictions sample parameters from the posterior and use these in forming their prediction.
+
 
 
 ### Building

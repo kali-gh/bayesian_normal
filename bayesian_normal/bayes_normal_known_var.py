@@ -140,6 +140,18 @@ class BayesNormalEstimator(BaseEstimator):
         return self
 
     def predict(self, X):
+
+        if len(X.shape) == 1:  # 1d array
+            X = X.reshape((-1, 1))  # Nx1
+        else:
+            pass
+
+        if self.intercept:
+            ones = np.reshape(np.ones(X.shape[0]), (-1, 1))
+            X = np.hstack([ones, X])
+        else:
+            pass
+
         if not self.predict_thompson_sample:
             inferences = X @ self.bn.posterior.mean
         else:
