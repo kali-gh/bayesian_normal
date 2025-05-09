@@ -117,17 +117,20 @@ class BayesNormalEstimator(BaseEstimator):
             variance,
             prior_mean,
             prior_cov,
+            intercept=False,
             predict_thompson_sample = False):
 
         self.variance = variance
         self.prior_mean = prior_mean
         self.prior_cov = prior_cov
+        self.intercept = intercept
         self.predict_thompson_sample=predict_thompson_sample
 
         self.bn = BayesNormal(
             variance=variance,
             prior_mean=prior_mean,
-            prior_cov=prior_cov)
+            prior_cov=prior_cov,
+            intercept=intercept)
 
     def fit(self, X, y=None):
 

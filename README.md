@@ -23,6 +23,159 @@ pip install -r requirements.txt
 
 ### Testing
 
+As an example problem we estimate parameters for a simple linear regression as in Bishop, 2006, section 3.1. 
+
+In that setting the outcome y is a linear function of X with an intercept as:
+
+$$
+y_n = w_0 + w_1 x_n 
+$$
+
+and our goal is to discover the parameters for this function. Assuming that the true data generating process is 
+
+$$
+w_0 = -0.7 
+$$
+
+$$
+w_1 = 0.5
+$$
+
+We can test the library by running the following commands:
+
+```python
+np.random.seed(42)
+
+import numpy as np
+
+inputs = {
+    'prior_alpha' : 2.0,
+    'w0_true' : -0.7,
+    'w1_true' : 0.5,
+    'precision_y' : 25,
+    'N' : 100
+}
+
+std_dev_y = np.sqrt(1 / inputs['precision_y'])
+X = np.random.uniform(-1, 1, inputs['N'])
+
+data = {
+    'X': X,
+    'y': inputs['w0_true'] + inputs['w1_true'] * X + np.random.normal(0, scale=std_dev_y)
+}
+```
+
+Note in the above we have set the variance of $y$ to be $1/\lambda_y=1/25$ where $\lambda_y$ is the precision or inverse variance. 
+This controls the random noise in y in the true generating process. We have also set a numpy random seed to make the outputs reproducible.  
+
+Next to estimate the model we need to set prior parameters for it as 
+
+```python
+data.update({
+    'prior_alpha' : 2
+})
+
+data.update({
+    'prior_mean': np.reshape(np.array([0, 0]), (-1, 1)),
+    'prior_cov': (1 / data['prior_alpha']) * np.identity(2)
+})
+```
+
+This sets the prior mean to zero for each parameter and the prior covariance to the identity matrix divided by two (the parameter $\alpha$)
+
+We can next set the prior for estimation using
+
+```python
+from libs_dist import Normal
+prior = Normal(mean=data['prior_mean'], cov=data['prior_cov'])
+```
+
+The prior sets the inputs to the learning as shown:
+```python
+Normal(
+    mean= array(
+           [[0],[0]]),
+       
+    cov=array(
+           [[0.5, 0. ],
+           [0. , 0.5]]
+       ))
+```
+
+and we can for the estimator using
+
+```python
+from bayes_normal_known_var import BayesNormal
+bn = BayesNormal(
+    variance=1/inputs['precision_y'], 
+    prior_mean=data['prior_mean'], 
+    prior_cov=data['prior_cov'], 
+    intercept=True)
+```
+
+Next we can inform the estimator of new observations using
+
+```python
+bn.add_observations(data['X'], data['y'])
+```
+
+and examine the posterior:
+```python
+Normal(
+    mean=array(
+        [[-0.68210729],
+         [ 0.49895389]]), 
+    cov=array(
+        [[4.03724031e-04, 6.78590128e-05],
+        [6.78590128e-05, 1.13874904e-03]]
+    ))
+```
+
+so that after 20 observations the intercept is estimated as $-0.682$ vs the ground truth of $-0.700$ and 
+the slope is $0.499$ vs. the ground truth of $0.500$
+
+
+
+### Scikit-learn Estimator
+
+The package also implements a scikit-learn estimator for fit and predict
+
+Forming the estimator :
+```python
+from bayesian_normal.bayes_normal_known_var import BayesNormalEstimator
+
+clf = BayesNormalEstimator(
+    variance=1/inputs['precision_y'],
+    prior_mean=data['prior_mean'],
+    prior_cov=data['prior_cov'],
+    intercept=True
+)
+```
+
+We can fit the stimator with
+
+```python
+clf.fit(data['X'], data['y'])
+```
+
+and can examine the posterior with
+```python
+clf.bn.posterior
+
+Normal(
+    mean=array(
+      [[-0.68210729],
+       [ 0.49895389]]
+    ), 
+    cov=array(
+        [[4.03724031e-04, 6.78590128e-05],
+        [6.78590128e-05, 1.13874904e-03]]
+    ))
+```
+
+
+This is also encapsulated in the following script:
+
 ```
 python test_known_var.py
 ```
