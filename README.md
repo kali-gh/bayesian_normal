@@ -227,10 +227,10 @@ python setup.py bdist_wheel
 After installing to venv
 
 Limited set of tests on sequential learning
-    - Checks if we can match Bishop on the dummy problem
-    - Checks if posterior estimates are close to true means in a dummy 2d no intercept problem
-    - Checks if BayesNormal matches the estimator for the 2d no intercept problem
-    - Checks if learning sequentially in batches yields the same posterior as if we learn in 1-shot
+1. Checks if we can match Bishop on the dummy problem
+2. Checks if posterior estimates are close to true means in a dummy 2d no intercept problem
+3. Checks if BayesNormal matches the estimator for the 2d no intercept problem
+4. Checks if learning sequentially in batches yields the same posterior as if we learn in 1-shot
 
 ```python
 pytest tests/test_known_var.py
