@@ -107,9 +107,9 @@ def test_2d_no_intercept():
 
     OK_TOLERANCE_COV = 1E-3
     assert np.abs(bne.bn.posterior.cov[0,0] - 1.12879383e-03) < OK_TOLERANCE_COV,  'cov[0,0] does not match'
-    assert np.abs(bne.bn.posterior.cov[0, 1] - -2.87881813e-05) < OK_TOLERANCE_COV,  'cov[0,0] does not match'
-    assert np.abs(bne.bn.posterior.cov[1, 0] - -2.87881813e-05) < OK_TOLERANCE_COV,  'cov[0,0] does not match'
-    assert np.abs(bne.bn.posterior.cov[1, 1] - 1.28031165e-03) < OK_TOLERANCE_COV,  'cov[0,0] does not match'
+    assert np.abs(bne.bn.posterior.cov[0, 1] - -2.87881813e-05) < OK_TOLERANCE_COV,  'cov[0,1] does not match'
+    assert np.abs(bne.bn.posterior.cov[1, 0] - -2.87881813e-05) < OK_TOLERANCE_COV,  'cov[1,0] does not match'
+    assert np.abs(bne.bn.posterior.cov[1, 1] - 1.28031165e-03) < OK_TOLERANCE_COV,  'cov[1,1] does not match'
 
 
 def test_2d_bayes_normal():
