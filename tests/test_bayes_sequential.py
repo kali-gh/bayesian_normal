@@ -6,7 +6,7 @@ import random
 
 from scipy.stats import multivariate_normal
 
-from libs_dist import Normal
+from bayesian_normal.libs_dist import Normal
 
 np.random.seed(42)
 random.seed(42)
@@ -120,11 +120,13 @@ for xv, yv in zip(x, y):
     plt.contourf(w0, w1, prior)
     plt.colorbar()
     plt.savefig(f'temp/{idx=}_prior.png')
+    plt.close()
 
     plt.figure()
     plt.contourf(w0, w1, posterior)
     plt.colorbar()
     plt.savefig(f'temp/{idx=}_posterior.png')
+    plt.close()
 
     idx += 1
 

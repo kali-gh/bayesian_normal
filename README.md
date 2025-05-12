@@ -221,3 +221,15 @@ To build as wheel
 ```
 python setup.py bdist_wheel
 ```
+
+### Testing
+
+After installing to venv
+
+```
+python tests/test_bayes_sequential.py 
+```
+
+```python
+pytest tests/test_known_var.py
+```
