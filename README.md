@@ -233,7 +233,7 @@ Limited set of tests on sequential learning
 4. Checks if learning sequentially in batches yields the same posterior as if we learn in 1-shot
 
 ```python
-pytest tests/test_known_var.py
+pytest -v
 ```
 
 To check the Bishop problem separately
