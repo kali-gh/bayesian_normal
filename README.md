@@ -6,12 +6,25 @@ The goal of this library is to take steps towards doing that. Our end goal for t
 1) Able to learn from sequential data where the generation process has an unknown mean but a known variance
 2) Same as 1), for case of unknown mean and unknown variance
 
-### Repo overview
+### Overview
 
 In the current state of the library, we implement two main scripts:
 
-- bayes_sequential : sequential learning for a 1-d regression problem as shown in Bishop 2006, page 155.
 - main_known_var : implement general solution as shown in Bishop 2006 for case of unknown mean and known variance
+- bayes_sequential : example sequential learning for a 1-d regression problem as shown in Bishop 2006, page 155.
+
+
+The advantages of this type of learning are:
+1) We can learn online with extremely low latency, since our updates only depend on the current model's mean 
+and covariance, alongside the new inputs. This type of framework will train and update much faster on average than 
+classical models.
+2) We maintain uncertainty estimates over our estimators' posterior distribution for both their mean and covariance, 
+which means we can sample from this distribution when making predictions (Thompson sampling) or to create credible
+intervals on them.
+
+For the case of known variance the library implements sequential bayesian multivariate learning as shown below:
+![alt text](assets/seq_model.png)
+
 
 ### Set up 
 
